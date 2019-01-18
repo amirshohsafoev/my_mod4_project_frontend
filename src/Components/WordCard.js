@@ -1,20 +1,30 @@
 import React from "react";
-// import { Card, Button, CardTitle, CardText } from "reactstrap";
+import {
+  Card,
+  Button,
+  CardHeader,
+  CardFooter,
+  CardBody,
+  CardTitle,
+  CardText
+} from "reactstrap";
 const WordCard = props => {
-  // console.log(props.word.headword);
+  console.log(props.word.headword);
   let { word } = props;
 
   return (
-    <div>
-      <h2>{word.headword}</h2>
-      <h4>Defenition:</h4>
-      <p>{word.defenition}</p>
-      <h4>Example:</h4>
-      <p>{word.example}</p>
-    </div>
+    <Card body inverse style={{ backgroundColor: "#333", borderColor: "#333" }}>
+      <CardHeader style={{ backgroundColor: "#3cc194" }}>
+        {word.headword}
+      </CardHeader>
+      <CardBody>
+        <CardTitle>Defenition:</CardTitle>
+        <CardText>{word.definition}</CardText>
+        <CardTitle>Example:</CardTitle>
+        <CardText>{word.example}</CardText>
+      </CardBody>
+    </Card>
   );
 };
 
 export default WordCard;
-// <Card body outline color="success">
-//   </Card>

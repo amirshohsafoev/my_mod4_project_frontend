@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import WordsContainer from "./Containers/WordsContainer";
+import UpdateForm from "./Components/Form";
 
 class App extends Component {
   state = {
@@ -17,9 +18,21 @@ class App extends Component {
         })
       );
   }
+
+  submitHandler = word => {
+    let newArr = [word, ...this.state.words];
+    this.setState({
+      words: newArr
+    });
+  };
+
   render() {
-    // console.log(this.state.words);
-    return <WordsContainer words={this.state.words} />;
+    return (
+      <div>
+        <UpdateForm parentSubmit={this.submitHandler} />
+        <WordsContainer words={this.state.words} />
+      </div>
+    );
   }
 }
 

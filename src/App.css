@@ -1,3 +1,11 @@
+.block-example {
+  width: 60rem;
+  height: 13rem;
+  margin: 0.5rem;
+  background-color: #eee;
+  display: inline-block;
+}
+
 .App {
   text-align: center;
 }
