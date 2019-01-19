@@ -9,22 +9,28 @@ import {
   CardText
 } from "reactstrap";
 const WordCard = props => {
-  console.log(props.word.headword);
+  // console.log(props.word.headword);
   let { word } = props;
-
-  return (
-    <Card body inverse style={{ backgroundColor: "#333", borderColor: "#333" }}>
-      <CardHeader style={{ backgroundColor: "#3cc194" }}>
-        {word.headword}
-      </CardHeader>
-      <CardBody>
-        <CardTitle>Defenition:</CardTitle>
-        <CardText>{word.definition}</CardText>
-        <CardTitle>Example:</CardTitle>
-        <CardText>{word.example}</CardText>
-      </CardBody>
-    </Card>
-  );
+  // let { handleSelect } = props;
+  let { parent } = props;
+  if ((parent = "container")) {
+    return (
+      <Card>
+        <CardHeader tag="h3" className="text-danger">
+          {word.headword}
+        </CardHeader>
+        <CardBody>
+          <CardTitle className="text-primary">Definition:</CardTitle>
+          <CardText className="text-info">{word.definition}</CardText>
+          <CardTitle className="text-primary">Example:</CardTitle>
+          <CardText className="text-info">{word.example}</CardText>
+        </CardBody>
+        <Button className="btn btn-warning">Must Learn</Button>{" "}
+      </Card>
+    );
+  } else {
+    return <h1>Do not know anything yet!</h1>;
+  }
 };
 
 export default WordCard;

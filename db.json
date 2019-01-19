@@ -1,19 +1,34 @@
 {
   "words": [
     {
+      "id": 0,
       "headword": "abandon",
       "definition": "to leave a place, thing, or person, usually for ever",
       "example": "We had to abandon the car."
     },
     {
+      "id": 1,
       "headword": "abstract",
       "definition": " existing as an idea, feeling, or quality, not as a material object",
       "example": "Truth and beauty are abstract concepts."
     },
     {
+      "id": 2,
       "headword": "albeit",
       "definition": "although",
       "example": "The evening was very pleasant, albeit a little quiet."
+    },
+    {
+      "headword": "acknowledge",
+      "definition": "to accept, admit, or recognize something, or the truth or existence of something",
+      "example": "She acknowledged having been at fault.",
+      "id": 3
+    },
+    {
+      "headword": "aggregate",
+      "definition": "something formed by adding together several amounts or things",
+      "example": "hey purchased an aggregate of 3,000 shares in the company.",
+      "id": 4
     }
   ]
 }
