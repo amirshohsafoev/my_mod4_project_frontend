@@ -7,7 +7,11 @@ class MustLearnWordsContainer extends React.Component {
     return this.props.mustLearnList.map(word => {
       return (
         <Col sm="12" md={{ size: 5, offset: 0 }}>
-          <WordCard parent="container" word={word} key={word.id} />
+          <WordCard
+            mustWord={word}
+            key={word.headword}
+            handleUnselect={this.props.handleUnselect}
+          />
         </Col>
       );
     });
@@ -16,6 +20,7 @@ class MustLearnWordsContainer extends React.Component {
     // console.log(this.props);
     return (
       <Container>
+        <h1>Must Learn!</h1>
         <Row> {this.iterateEachWord()}</Row>
       </Container>
     );

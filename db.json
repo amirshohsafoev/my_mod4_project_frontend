@@ -29,6 +29,18 @@
       "definition": "something formed by adding together several amounts or things",
       "example": "hey purchased an aggregate of 3,000 shares in the company.",
       "id": 4
+    },
+    {
+      "headword": "brusque",
+      "definition": "short, abrupt, dissmissive",
+      "example": "The captain's brusque manner offended the passengers.",
+      "id": 5
+    },
+    {
+      "headword": "ballad",
+      "definition": "a love song or narrative poem",
+      "example": "Greta's boyfriend sang her a ballad during their walk through the dark woods.",
+      "id": 6
     }
   ]
 }

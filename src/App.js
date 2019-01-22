@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import { Alert, FormGroup, Label, Input } from "reactstrap";
 // import logo from "./logo.svg";
 import "./App.css";
 import WordsContainer from "./Containers/WordsContainer";
 import UpdateForm from "./Components/UpdateForm";
 import MustLearnWordsContainer from "./Containers/MustLearnWordsContainer";
+// import SearchForm from "./Components/SearchForm";
 class App extends Component {
   state = {
     words: [],
-    mustLearn: []
+    mustLearn: [],
+    searchBar: ""
   };
 
   componentDidMount() {
@@ -39,23 +42,62 @@ class App extends Component {
     });
   };
 
-  handleSelect(word) {
-    let newArr = [word, ...this.state.mustLearn];
+  handleSelect = word => {
+    let newArr = [...this.state.mustLearn];
+    if (!newArr.includes(word)) {
+      newArr = [word, ...this.state.mustLearn];
+      this.setState({
+        mustLearn: newArr
+      });
+    } else {
+      return <Alert color="info">This is a info alert — check it out!</Alert>;
+    }
+  };
+
+  handleUnselect = myWord => {
+    let newArr = [...this.state.mustLearn].filter(word => word !== myWord);
     this.setState({
       mustLearn: newArr
     });
-  }
+  };
+
+  handleSearchBar = e => {
+    console.log(e.target.value);
+    this.setState({
+      searchBar: e.target.value
+    });
+  };
+
+  filterWordsBySearchBarInput = () => {
+    return this.state.words.filter(word =>
+      word.headword.toLowerCase().includes(this.state.searchBar.toLowerCase())
+    );
+  };
 
   render() {
     // console.log(this.state.mustLearn);
     return (
       <div>
+        <FormGroup>
+          <Label for="exampleSearch">Search</Label>
+          <Input
+            type="search"
+            name="search"
+            id="exampleSearch"
+            placeholder="search word"
+            value={this.state.searchBar}
+            onChange={e => this.handleSearchBar(e)}
+          />
+        </FormGroup>
         <UpdateForm parentSubmit={this.submitHandler} />
         <WordsContainer
-          words={this.state.words}
+          words={this.filterWordsBySearchBarInput()}
           handleSelect={this.handleSelect}
         />
-        <MustLearnWordsContainer mustLearnList={this.state.mustLearn} />
+        <MustLearnWordsContainer
+          mustLearnList={this.state.mustLearn}
+          handleUnselect={this.handleUnselect}
+        />
       </div>
     );
   }

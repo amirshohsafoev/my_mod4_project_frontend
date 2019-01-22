@@ -11,9 +11,10 @@ import {
 const WordCard = props => {
   // console.log(props.word.headword);
   let { word } = props;
-  // let { handleSelect } = props;
-  let { parent } = props;
-  if ((parent = "container")) {
+  let { handleSelect } = props;
+  let { handleUnselect } = props;
+  let { mustWord } = props;
+  if (props.parent === "container") {
     return (
       <Card>
         <CardHeader tag="h3" className="text-danger">
@@ -25,11 +26,31 @@ const WordCard = props => {
           <CardTitle className="text-primary">Example:</CardTitle>
           <CardText className="text-info">{word.example}</CardText>
         </CardBody>
-        <Button className="btn btn-warning">Must Learn</Button>{" "}
+        <Button onClick={() => handleSelect(word)} className="btn btn-warning">
+          Must Learn
+        </Button>{" "}
       </Card>
     );
   } else {
-    return <h1>Do not know anything yet!</h1>;
+    return (
+      <Card>
+        <CardHeader tag="h3" className="text-danger">
+          {mustWord.headword}
+        </CardHeader>
+        <CardBody>
+          <CardTitle className="text-primary">Definition:</CardTitle>
+          <CardText className="text-info">{mustWord.definition}</CardText>
+          <CardTitle className="text-primary">Example:</CardTitle>
+          <CardText className="text-info">{mustWord.example}</CardText>
+        </CardBody>
+        <Button
+          onClick={() => handleUnselect(mustWord)}
+          className="btn btn-danger"
+        >
+          I have learned
+        </Button>{" "}
+      </Card>
+    );
   }
 };
 
