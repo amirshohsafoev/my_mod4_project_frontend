@@ -8,17 +8,25 @@ import MustLearnWordsContainer from "./Containers/MustLearnWordsContainer";
 // import SearchForm from "./Components/SearchForm";
 class App extends Component {
   state = {
+    languages: [],
     words: [],
     mustLearn: [],
     searchBar: ""
   };
 
   componentDidMount() {
+    fetch("http://localhost:3000/languages")
+      .then(resp => resp.json())
+      .then(languageData =>
+        this.setState({
+          languages: languageData
+        })
+      );
     fetch("http://localhost:3000/words")
       .then(resp => resp.json())
-      .then(data =>
+      .then(wordData =>
         this.setState({
-          words: data
+          words: wordData
         })
       );
   }
@@ -75,7 +83,7 @@ class App extends Component {
   };
 
   render() {
-    // console.log(this.state.mustLearn);
+    console.log(this.state.languages);
     return (
       <div>
         <FormGroup>
