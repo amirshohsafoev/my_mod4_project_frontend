@@ -41,7 +41,24 @@
       "definition": "a love song or narrative poem",
       "example": "Greta's boyfriend sang her a ballad during their walk through the dark woods.",
       "id": 6
+    },
+    {
+      "headword": "",
+      "definition": "",
+      "example": "",
+      "id": 7
+    },
+    {
+      "headword": "acumen",
+      "definition": "keen insight",
+      "example": "Because of this mathematical acumen, Larry was able to quickly figure out problems that took other students hours.",
+      "id": 8
     }
   ],
-  "languages": ["Enslish", "Spanish", "German", "French"]
+  "languages": [
+    "Enslish",
+    "Spanish",
+    "German",
+    "French"
+  ]
 }

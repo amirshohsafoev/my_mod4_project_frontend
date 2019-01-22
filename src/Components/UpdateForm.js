@@ -37,35 +37,38 @@ export default class UpdateForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.submitHandler}>
-        <br />
-        <input
-          type="text"
-          name="headword"
-          value={this.state.name}
-          placeholder="headword"
-          onChange={this.changeHandler}
-        />
-        <br />
-        <input
-          type="text"
-          name="definition"
-          value={this.state.age}
-          placeholder="definition"
-          onChange={this.changeHandler}
-        />
-        <br />
-        <input
-          type="text"
-          name="example"
-          value={this.state.house}
-          placeholder="example"
-          onChange={this.changeHandler}
-        />
-        <br />
-
-        <button>Add</button>
-      </form>
+      <Form onSubmit={this.submitHandler}>
+        <FormGroup>
+          <Label>Headword</Label>
+          <Input
+            placeholder="Type in a headword"
+            type="text"
+            name="headword"
+            value={this.state.name}
+            onChange={this.changeHandler}
+          />
+          <Label>Definition</Label>
+          <Input
+            type="textarea"
+            name="definition"
+            id="exampleText"
+            placeholder="Type in a definition"
+            onChange={this.changeHandler}
+          />
+          <Label>Example</Label>
+          <Input
+            type="textarea"
+            name="example"
+            id="exampleText"
+            value={this.state.house}
+            placeholder="Type in an example"
+            onChange={this.changeHandler}
+          />
+          <Button outline color="info">
+            Add New Word
+          </Button>
+        </FormGroup>
+      </Form>
     );
   }
 }

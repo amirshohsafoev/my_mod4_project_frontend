@@ -1,5 +1,22 @@
 import React, { Component } from "react";
-import { Alert, FormGroup, Label, Input } from "reactstrap";
+import {
+  Alert,
+  Collapse,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Fade,
+  FormGroup,
+  Input,
+  Label,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown
+} from "reactstrap";
 // import logo from "./logo.svg";
 import "./App.css";
 import WordsContainer from "./Containers/WordsContainer";
@@ -11,8 +28,23 @@ class App extends Component {
     languages: [],
     words: [],
     mustLearn: [],
-    searchBar: ""
+    searchBar: "",
+    isOpen: false,
+    fadeIn: true
   };
+
+  fadeNewForm = () => {
+    console.log(this.state.fadeIn);
+    this.setState({
+      fadeIn: !this.state.fadeIn
+    });
+  };
+
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
 
   componentDidMount() {
     fetch("http://localhost:3000/languages")
@@ -70,7 +102,7 @@ class App extends Component {
   };
 
   handleSearchBar = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     this.setState({
       searchBar: e.target.value
     });
@@ -83,21 +115,54 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.languages);
+    // console.log(this.state.languages);
     return (
       <div>
-        <FormGroup>
-          <Label for="exampleSearch">Search</Label>
-          <Input
-            type="search"
-            name="search"
-            id="exampleSearch"
-            placeholder="search word"
-            value={this.state.searchBar}
-            onChange={e => this.handleSearchBar(e)}
-          />
-        </FormGroup>
-        <UpdateForm parentSubmit={this.submitHandler} />
+        <div>
+          <Navbar color="warning" light expand="md">
+            <NavbarBrand href="/">My Dictionary</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <Input
+                    type="search"
+                    name="search"
+                    id="exampleSearch"
+                    placeholder="search word"
+                    value={this.state.searchBar}
+                    onChange={e => this.handleSearchBar(e)}
+                  />
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/components/">Components</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                    GitHub
+                  </NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Menu
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>Log In</DropdownItem>
+                    <DropdownItem>Sig In</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem onClick={this.fadeNewForm}>
+                      Add New Word
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
+            </Collapse>
+          </Navbar>
+        </div>
+        <FormGroup />
+        <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
+          <UpdateForm parentSubmit={this.submitHandler} />
+        </Fade>
         <WordsContainer
           words={this.filterWordsBySearchBarInput()}
           handleSelect={this.handleSelect}
