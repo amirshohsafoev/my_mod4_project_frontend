@@ -20,45 +20,42 @@ import {
 // import logo from "./logo.svg";
 import "./App.css";
 import WordsContainer from "./Containers/WordsContainer";
-import UpdateForm from "./Components/UpdateForm";
 import MustLearnWordsContainer from "./Containers/MustLearnWordsContainer";
-// import SearchForm from "./Components/SearchForm";
+import SearchForm from "./Forms/SearchForm";
+import NewUserForm from "./Forms/NewUserForm";
+import NewWordForm from "./Forms/NewWordForm";
 class App extends Component {
   state = {
     languages: [],
     words: [],
+    filteredWordsBysearch: [],
     mustLearn: [],
-    searchBar: "",
-    isOpen: false,
-    fadeIn: true
+    isOpen: false
   };
 
-  fadeNewForm = () => {
-    console.log(this.state.fadeIn);
+  filterWordsBySearchBarInput = value => {
+    const newFilteredWords = this.state.words.filter(word =>
+      word.headword.toLowerCase().includes(value.toLowerCase())
+    );
     this.setState({
-      fadeIn: !this.state.fadeIn
+      filteredWordsBysearch: newFilteredWords
     });
   };
-
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
 
   componentDidMount() {
-    fetch("http://localhost:3000/languages")
+    fetch("http://localhost:3000/api/v1/languages")
       .then(resp => resp.json())
       .then(languageData =>
         this.setState({
           languages: languageData
         })
       );
-    fetch("http://localhost:3000/words")
+    fetch("http://localhost:3000/api/v1/words")
       .then(resp => resp.json())
       .then(wordData =>
         this.setState({
-          words: wordData
+          words: wordData,
+          filteredWordsBysearch: wordData
         })
       );
   }
@@ -82,6 +79,62 @@ class App extends Component {
     });
   };
 
+  render() {
+    // console.log(this.state.languages);
+    return (
+      <div>
+        <div>
+          <Navbar color="warning" light expand="md">
+            <NavbarBrand href="/">My Dictionary</NavbarBrand>
+            <NavbarToggler onClick={this.toggle} />
+            <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <SearchForm
+                    filterWordsBySearchBarInput={
+                      this.filterWordsBySearchBarInput
+                    }
+                  />
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/components/">Components</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NewWordForm parentSubmit={this.submitHandler} />
+                </NavItem>
+                <NavItem>
+                  <NavLink href="https://www.youtube.com/watch?v=sr8fjIXygWU">
+                    GitHub
+                  </NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Menu
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>Log In</DropdownItem>
+                    <DropdownItem>Create User</DropdownItem>
+                    <DropdownItem divider />
+                    <DropdownItem>Will Add Later</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
+            </Collapse>
+          </Navbar>
+        </div>
+        <FormGroup />
+        <WordsContainer
+          words={this.state.filteredWordsBysearch}
+          handleSelect={this.handleSelect}
+        />
+        <MustLearnWordsContainer
+          mustLearnList={this.state.mustLearn}
+          handleUnselect={this.handleUnselect}
+        />
+      </div>
+    );
+  }
+
   handleSelect = word => {
     let newArr = [...this.state.mustLearn];
     if (!newArr.includes(word)) {
@@ -101,78 +154,10 @@ class App extends Component {
     });
   };
 
-  handleSearchBar = e => {
-    // console.log(e.target.value);
+  toggle() {
     this.setState({
-      searchBar: e.target.value
+      isOpen: !this.state.isOpen
     });
-  };
-
-  filterWordsBySearchBarInput = () => {
-    return this.state.words.filter(word =>
-      word.headword.toLowerCase().includes(this.state.searchBar.toLowerCase())
-    );
-  };
-
-  render() {
-    // console.log(this.state.languages);
-    return (
-      <div>
-        <div>
-          <Navbar color="warning" light expand="md">
-            <NavbarBrand href="/">My Dictionary</NavbarBrand>
-            <NavbarToggler onClick={this.toggle} />
-            <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <Input
-                    type="search"
-                    name="search"
-                    id="exampleSearch"
-                    placeholder="search word"
-                    value={this.state.searchBar}
-                    onChange={e => this.handleSearchBar(e)}
-                  />
-                </NavItem>
-                <NavItem>
-                  <NavLink href="/components/">Components</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
-                    GitHub
-                  </NavLink>
-                </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                  <DropdownToggle nav caret>
-                    Menu
-                  </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem>Log In</DropdownItem>
-                    <DropdownItem>Sig In</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem onClick={this.fadeNewForm}>
-                      Add New Word
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
-              </Nav>
-            </Collapse>
-          </Navbar>
-        </div>
-        <FormGroup />
-        <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
-          <UpdateForm parentSubmit={this.submitHandler} />
-        </Fade>
-        <WordsContainer
-          words={this.filterWordsBySearchBarInput()}
-          handleSelect={this.handleSelect}
-        />
-        <MustLearnWordsContainer
-          mustLearnList={this.state.mustLearn}
-          handleUnselect={this.handleUnselect}
-        />
-      </div>
-    );
   }
 }
 
