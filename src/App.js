@@ -22,6 +22,9 @@ import "./App.css";
 import WordsContainer from "./Containers/WordsContainer";
 import UpdateForm from "./Components/UpdateForm";
 import MustLearnWordsContainer from "./Containers/MustLearnWordsContainer";
+import Login from "./Components/Login";
+import SignForm from "./Components/SignForm";
+import { Switch, Route } from "react-router";
 // import SearchForm from "./Components/SearchForm";
 class App extends Component {
   state = {
@@ -47,14 +50,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/languages")
+    fetch("http://localhost:3000/api/v1/languages")
       .then(resp => resp.json())
       .then(languageData =>
         this.setState({
           languages: languageData
         })
       );
-    fetch("http://localhost:3000/words")
+    fetch("http://localhost:3000/api/v1/words")
       .then(resp => resp.json())
       .then(wordData =>
         this.setState({
@@ -66,7 +69,7 @@ class App extends Component {
   submitHandler = word => {
     console.log(word);
     let newArr = [word, ...this.state.words];
-    fetch("http://localhost:3000/words", {
+    fetch("http://localhost:3000/api/v1/words", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -102,7 +105,7 @@ class App extends Component {
   };
 
   handleSearchBar = e => {
-    // console.log(e.target.value);
+    console.log(e.target.value);
     this.setState({
       searchBar: e.target.value
     });
@@ -138,7 +141,7 @@ class App extends Component {
                   <NavLink href="/components/">Components</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                  <NavLink href="https://www.youtube.com/watch?v=sr8fjIXygWU">
                     GitHub
                   </NavLink>
                 </NavItem>
@@ -159,10 +162,13 @@ class App extends Component {
             </Collapse>
           </Navbar>
         </div>
+
         <FormGroup />
         <Fade in={this.state.fadeIn} tag="h5" className="mt-3">
           <UpdateForm parentSubmit={this.submitHandler} />
         </Fade>
+        <SignForm />
+        <Login />
         <WordsContainer
           words={this.filterWordsBySearchBarInput()}
           handleSelect={this.handleSelect}
@@ -171,6 +177,9 @@ class App extends Component {
           mustLearnList={this.state.mustLearn}
           handleUnselect={this.handleUnselect}
         />
+        <Switch>
+          <Route path="/login" render={() => <Login />} />
+        </Switch>
       </div>
     );
   }
