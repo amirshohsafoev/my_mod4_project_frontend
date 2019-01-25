@@ -56,9 +56,11 @@
     }
   ],
   "languages": [
-    "Enslish",
-    "Spanish",
-    "German",
-    "French"
+    { "name": "Italian", "id": 0 },
+    { "name": "Arabic", "id": 1 },
+    { "name": "Enslish", "id": 2 },
+    { "name": "Spanish", "id": 3 },
+    { "name": "German", "id": 4 },
+    { "name": "French", "id": 5 }
   ]
 }

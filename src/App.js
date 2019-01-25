@@ -24,6 +24,7 @@ import SearchForm from "./Forms/SearchForm";
 import NewUserForm from "./Forms/NewUserForm";
 import NewWordForm from "./Forms/NewWordForm";
 import { Switch, Route, Link } from "react-router-dom";
+import { planet } from "react-icons/md";
 class App extends Component {
   state = {
     languages: [],
@@ -34,12 +35,14 @@ class App extends Component {
   };
 
   render() {
-    // console.log(this.state.mustLearn);
+    console.log(this.state.languages);
     return (
       <div>
         <div>
           <Navbar color="warning" light expand="md">
-            <NavbarBrand href="/">My Dictionary</NavbarBrand>
+            <Link to="/">
+              <ion-icon name="planet" size="large" />
+            </Link>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
@@ -51,10 +54,14 @@ class App extends Component {
                   />
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/components/">Components</NavLink>
+                  <NavLink tag={Link} to="/components/">
+                    Components
+                  </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/createUser">Create User</NavLink>
+                  <NavLink tag={Link} to="/createUser">
+                    Create User
+                  </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink href="https://www.youtube.com/watch?v=sr8fjIXygWU">
@@ -98,6 +105,7 @@ class App extends Component {
             path="/words"
             render={() => (
               <WordsContainer
+                languages={this.state.languages}
                 words={this.state.filteredWordsBysearch}
                 handleSelect={this.handleSelect}
               />
@@ -167,7 +175,7 @@ class App extends Component {
       .then(resp => resp.json())
       .then(languageData =>
         this.setState({
-          languages: languageData
+          languages: [...languageData]
         })
       );
     fetch("http://localhost:3000/api/v1/words")
