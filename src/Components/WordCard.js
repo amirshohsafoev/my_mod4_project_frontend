@@ -9,15 +9,16 @@ import {
   CardText
 } from "reactstrap";
 const WordCard = props => {
-  // console.log(props.word.headword);
+  // console.log(props.toggle);
   let { word } = props;
   let { handleSelect } = props;
   let { handleUnselect } = props;
   let { mustWord } = props;
+  let { toggle } = props;
   if (props.parent === "container") {
     return (
       <Card>
-        <CardHeader tag="h3" className="text-danger">
+        <CardHeader onClick={toggle} tag="h3" className="text-danger">
           {word.headword}
         </CardHeader>
         <CardBody>
@@ -34,7 +35,7 @@ const WordCard = props => {
   } else {
     return (
       <Card>
-        <CardHeader tag="h3" className="text-danger">
+        <CardHeader onClick={toggle} tag="h3" className="text-danger">
           {mustWord.headword}
         </CardHeader>
         <CardBody>

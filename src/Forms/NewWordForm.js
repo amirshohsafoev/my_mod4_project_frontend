@@ -13,7 +13,7 @@ import {
   FormText,
   FormControl
 } from "reactstrap";
-
+import { Link } from "react-router-dom";
 export default class NewWordForm extends React.Component {
   constructor(props) {
     super(props);
@@ -58,57 +58,53 @@ export default class NewWordForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <Form onSubmit={this.submitHandler}>
-          <FormGroup>
-            <Button color="warning" onClick={this.toggle}>
-              New Word
+      <Form onSubmit={this.submitHandler}>
+        <Link to="/words" className="text-info" onClick={this.toggle}>
+          New Word
+        </Link>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          className={this.props.className}
+        >
+          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalBody>
+            <Label>Headword</Label>
+            <Input
+              placeholder="Type in a headword"
+              type="text"
+              name="headword"
+              value={this.state.name}
+              onChange={this.changeHandler}
+            />
+            <Label>Definition</Label>
+            <Input
+              type="textarea"
+              name="definition"
+              id="exampleText"
+              placeholder="Type in a definition"
+              onChange={this.changeHandler}
+            />
+            <Label>Example</Label>
+            <Input
+              type="textarea"
+              name="example"
+              id="exampleText"
+              value={this.state.house}
+              placeholder="Type in an example"
+              onChange={this.changeHandler}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="info" onClick={this.toggle}>
+              Add New Word
+            </Button>{" "}
+            <Button color="secondary" onClick={this.toggle}>
+              Cancel
             </Button>
-            <Modal
-              isOpen={this.state.modal}
-              toggle={this.toggle}
-              className={this.props.className}
-            >
-              <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-              <ModalBody>
-                <Label>Headword</Label>
-                <Input
-                  placeholder="Type in a headword"
-                  type="text"
-                  name="headword"
-                  value={this.state.name}
-                  onChange={this.changeHandler}
-                />
-                <Label>Definition</Label>
-                <Input
-                  type="textarea"
-                  name="definition"
-                  id="exampleText"
-                  placeholder="Type in a definition"
-                  onChange={this.changeHandler}
-                />
-                <Label>Example</Label>
-                <Input
-                  type="textarea"
-                  name="example"
-                  id="exampleText"
-                  value={this.state.house}
-                  placeholder="Type in an example"
-                  onChange={this.changeHandler}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="info" onClick={this.toggle}>
-                  Add New Word
-                </Button>{" "}
-                <Button color="secondary" onClick={this.toggle}>
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </Modal>
-          </FormGroup>
-        </Form>
-      </div>
+          </ModalFooter>
+        </Modal>
+      </Form>
     );
   }
 }

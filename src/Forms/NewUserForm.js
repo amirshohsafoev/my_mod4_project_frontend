@@ -13,7 +13,7 @@ import {
 export default class NewUserForm extends React.Component {
   render() {
     return (
-      <Form>
+      <Form className="form-style">
         <FormGroup>
           <Label for="exampleAddress">Username</Label>
           <Input
@@ -59,7 +59,7 @@ export default class NewUserForm extends React.Component {
             placeholder="Last name"
           />
         </FormGroup>
-        <Button>Create an account</Button>
+        <Button>Create User</Button>
       </Form>
     );
   }

@@ -5,7 +5,6 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Fade,
   FormGroup,
   Input,
   Label,
@@ -24,6 +23,7 @@ import MustLearnWordsContainer from "./Containers/MustLearnWordsContainer";
 import SearchForm from "./Forms/SearchForm";
 import NewUserForm from "./Forms/NewUserForm";
 import NewWordForm from "./Forms/NewWordForm";
+import { Switch, Route, Link } from "react-router-dom";
 class App extends Component {
   state = {
     languages: [],
@@ -33,54 +33,8 @@ class App extends Component {
     isOpen: false
   };
 
-  filterWordsBySearchBarInput = value => {
-    const newFilteredWords = this.state.words.filter(word =>
-      word.headword.toLowerCase().includes(value.toLowerCase())
-    );
-    this.setState({
-      filteredWordsBysearch: newFilteredWords
-    });
-  };
-
-  componentDidMount() {
-    fetch("http://localhost:3000/api/v1/languages")
-      .then(resp => resp.json())
-      .then(languageData =>
-        this.setState({
-          languages: languageData
-        })
-      );
-    fetch("http://localhost:3000/api/v1/words")
-      .then(resp => resp.json())
-      .then(wordData =>
-        this.setState({
-          words: wordData,
-          filteredWordsBysearch: wordData
-        })
-      );
-  }
-
-  submitHandler = word => {
-    console.log(word);
-    let newArr = [word, ...this.state.words];
-    fetch("http://localhost:3000/words", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        headword: word.headword,
-        definition: word.definition,
-        example: word.example
-      })
-    });
-    this.setState({
-      words: newArr
-    });
-  };
-
   render() {
-    // console.log(this.state.languages);
+    // console.log(this.state.mustLearn);
     return (
       <div>
         <div>
@@ -100,7 +54,7 @@ class App extends Component {
                   <NavLink href="/components/">Components</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NewWordForm parentSubmit={this.submitHandler} />
+                  <NavLink href="/createUser">Create User</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink href="https://www.youtube.com/watch?v=sr8fjIXygWU">
@@ -112,25 +66,54 @@ class App extends Component {
                     Menu
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>Log In</DropdownItem>
-                    <DropdownItem>Create User</DropdownItem>
+                    <Link to="/">
+                      <DropdownItem className="text-info">
+                        Languages
+                      </DropdownItem>
+                    </Link>
+                    <Link to="/words">
+                      <DropdownItem className="text-info">Words</DropdownItem>
+                    </Link>
+                    <Link to="/mustLearnWords">
+                      <DropdownItem className="text-info">
+                        Must Learn
+                      </DropdownItem>
+                    </Link>
                     <DropdownItem divider />
-                    <DropdownItem>Will Add Later</DropdownItem>
+                    <DropdownItem>
+                      <NewWordForm parentSubmit={this.submitHandler} />
+                    </DropdownItem>
+                    <DropdownItem className="text-info">
+                      New Language
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
             </Collapse>
           </Navbar>
         </div>
-        <FormGroup />
-        <WordsContainer
-          words={this.state.filteredWordsBysearch}
-          handleSelect={this.handleSelect}
-        />
-        <MustLearnWordsContainer
-          mustLearnList={this.state.mustLearn}
-          handleUnselect={this.handleUnselect}
-        />
+
+        <Switch>
+          <Route
+            path="/words"
+            render={() => (
+              <WordsContainer
+                words={this.state.filteredWordsBysearch}
+                handleSelect={this.handleSelect}
+              />
+            )}
+          />
+          <Route
+            path="/mustLearnWords"
+            render={() => (
+              <MustLearnWordsContainer
+                mustLearnList={this.state.mustLearn}
+                handleUnselect={this.handleUnselect}
+              />
+            )}
+          />
+          <Route path="/createUser" component={NewUserForm} />
+        </Switch>
       </div>
     );
   }
@@ -159,6 +142,52 @@ class App extends Component {
       isOpen: !this.state.isOpen
     });
   }
+
+  submitHandler = word => {
+    console.log(word);
+    let newArr = [word, ...this.state.words];
+    fetch("http://localhost:3000/words", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        headword: word.headword,
+        definition: word.definition,
+        example: word.example
+      })
+    });
+    this.setState({
+      words: newArr
+    });
+  };
+
+  componentDidMount() {
+    fetch("http://localhost:3000/api/v1/languages")
+      .then(resp => resp.json())
+      .then(languageData =>
+        this.setState({
+          languages: languageData
+        })
+      );
+    fetch("http://localhost:3000/api/v1/words")
+      .then(resp => resp.json())
+      .then(wordData =>
+        this.setState({
+          words: wordData,
+          filteredWordsBysearch: wordData
+        })
+      );
+  }
+
+  filterWordsBySearchBarInput = value => {
+    const newFilteredWords = this.state.words.filter(word =>
+      word.headword.toLowerCase().includes(value.toLowerCase())
+    );
+    this.setState({
+      filteredWordsBysearch: newFilteredWords
+    });
+  };
 }
 
 export default App;
