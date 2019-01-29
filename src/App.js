@@ -35,7 +35,7 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.languages);
+    console.log("proverka", this.state.languages);
     return (
       <div>
         <div>
