@@ -18,6 +18,7 @@ import {
 } from "reactstrap";
 // import logo from "./logo.svg";
 import "./App.css";
+import LanguagesContainer from "./Containers/LanguagesContainer";
 import WordsContainer from "./Containers/WordsContainer";
 import MustLearnWordsContainer from "./Containers/MustLearnWordsContainer";
 import SearchForm from "./Forms/SearchForm";
@@ -54,7 +55,7 @@ class App extends Component {
                   />
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} to="/components/">
+                  <NavLink tag={Link} to="/components">
                     Components
                   </NavLink>
                 </NavItem>
@@ -73,7 +74,7 @@ class App extends Component {
                     Menu
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <Link to="/">
+                    <Link to="/languages">
                       <DropdownItem className="text-info">
                         Languages
                       </DropdownItem>
@@ -109,6 +110,12 @@ class App extends Component {
                 words={this.state.filteredWordsBysearch}
                 handleSelect={this.handleSelect}
               />
+            )}
+          />
+          <Route
+            path="/languages"
+            render={() => (
+              <LanguagesContainer languages={this.state.languages} />
             )}
           />
           <Route

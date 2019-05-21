@@ -9,7 +9,7 @@ import {
   CardText
 } from "reactstrap";
 const WordCard = props => {
-  // console.log(props.toggle);
+  // console.log(props.word);
   let { word } = props;
   let { handleSelect } = props;
   let { handleUnselect } = props;

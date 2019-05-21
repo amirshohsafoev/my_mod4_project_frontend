@@ -1,7 +1,7 @@
 import React from "react";
-import WordCard from "../Components/WordCard";
-import Languages from "./Languages";
 import { Container, Row, Col, FormGroup, Button } from "reactstrap";
+
+import WordCard from "../Components/WordCard";
 export default class WordsContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -13,12 +13,8 @@ export default class WordsContainer extends React.Component {
     this.setState({ collapse: !this.state.collapse });
   }
 
-  iterateEachLanguage() {
-    return this.props.languages.map(language => (
-      <Languages language={language} key={language.id} />
-    ));
-  }
   iterateEachWord() {
+    // console.log(this.props.words);
     return this.props.words.map(word => {
       return (
         <Col sm="12" md={{ size: 5, offset: 0 }} key={word.headword}>
@@ -36,9 +32,6 @@ export default class WordsContainer extends React.Component {
   render() {
     return (
       <Container>
-        <FormGroup>
-          <Col> {this.iterateEachLanguage()}</Col>
-        </FormGroup>
         <FormGroup>
           <Row> {this.iterateEachWord()}</Row>
         </FormGroup>
